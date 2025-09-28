@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MedMinder and Advices — Your Medical Service Catalog</title>
+  <meta name="description" content="A library-inspired medical services website template: browse specialties like books, search, and book appointments."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f7f7fb;
+      --panel:#ffffff;
+      --ink:#0f172a; /* slate-900 */
+      --muted:#475569; /* slate-600 */
+      --accent:#22c55e; /* green-500 */
+      --accent-ink:#064e3b; /* green-900 */
+      --ring:#a7f3d0; /* green-200 */
+      --card:#f1f5f9; /* slate-100 */
+      --line:#e2e8f0; /* slate-200 */
+      --warning:#f59e0b;
+      --danger:#ef4444;
+      --radius:18px;
+      --shadow:0 10px 30px rgba(2,6,23,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--bg); color:var(--ink);
+      font: 16px/1.5 Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1100px; margin-inline:auto; padding:24px}
+    header{
+      position:sticky; top:0; z-index:20; backdrop-filter:saturate(1.2) blur(8px);
+      background:color-mix(in srgb, var(--bg) 75%, #fff 25%);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{display:flex; align-items:center; gap:16px; padding:14px 24px;}
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px
+    }
+    .logo{width:36px; height:36px; border-radius:10px; background:linear-gradient(135deg,var(--accent),#10b981); display:grid; place-items:center; color:white; box-shadow:var(--shadow)}
+    .brand-title{font-family:Fraunces, serif; font-weight:700; font-size:20px}
+    .tag{margin-left:auto; font-size:14px; color:var(--muted)}/* HERO */
+.hero{padding:32px 24px 8px}
+.hero-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:24px}
+.hero-card{
+  background:var(--panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:22px; box-shadow:var(--shadow)
+}
+.hero h1{margin:0 0 8px; font-family:Fraunces, serif; font-size:36px}
+.hero p{margin:0; color:var(--muted)}
+.searchbar{display:flex; gap:10px; margin-top:18px}
+.input{
+  flex:1; padding:14px 14px; border-radius:14px; border:1px solid var(--line); background:#fff;
+  outline:none; box-shadow:inset 0 1px 0 rgba(0,0,0,.03)
+}
+.input:focus{border-color:var(--accent); box-shadow:0 0 0 4px var(--ring)}
+.btn{padding:12px 16px; border:none; border-radius:12px; background:var(--accent); color:white; font-weight:600; cursor:pointer}
+.btn:hover{filter:brightness(.95)}
+
+/* SHELVES */
+.shelves{margin-top:18px; display:flex; gap:10px; flex-wrap:wrap}
+.chip{padding:8px 12px; border-radius:999px; border:1px solid var(--line); background:var(--card); font-size:14px; cursor:pointer}
+.chip[data-active="true"]{background:var(--accent); color:white; border-color:transparent}
+
+/* MAIN LAYOUT */
+main{padding:16px 24px 60px}
+.grid{display:grid; grid-template-columns: 1fr; gap:24px} /* single column now */
+.panel{background:var(--panel); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+
+/* CATALOG */
+.catalog{padding:18px}
+.catalog-header{display:flex; align-items:flex-start; justify-content:space-between; gap:14px; margin-bottom:8px; flex-direction:column}
+.catalog-top{display:flex; width:100%; gap:12px; align-items:center}
+.catalog-title{font-weight:700; font-size:16px}
+.sort{padding:10px 12px; border-radius:10px; border:1px solid var(--line); background:var(--card)}
+
+.notice{
+  width:100%; border-radius:12px; padding:14px; border:1px solid color-mix(in srgb, var(--warning) 10%, var(--line));
+  background: linear-gradient(180deg, #fffaf0, #fff); color:var(--ink); box-shadow:0 6px 18px rgba(245,158,11,.06); margin-bottom:12px;
+}
+.notice p{margin:0 0 8px; color:var(--muted)}
+.notice .actions{display:flex; gap:8px}
+
+/* RESULTS CARDS */
+.cards{display:grid; grid-template-columns: repeat(3, 1fr); gap:14px}
+.card{
+  border:1px solid var(--line); border-radius:16px; overflow:hidden; background:linear-gradient(#fff, #fafafa);
+  display:flex; flex-direction:column; min-height:220px
+}
+.card-top{display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px dashed var(--line); background:
+  linear-gradient(180deg, rgba(34,197,94,.08), transparent 60%)}
+.avatar{width:44px; height:44px; border-radius:10px; display:grid; place-items:center; background:var(--card); font-size:22px}
+.meta{display:grid}
+.title{font-weight:700}
+.sub{font-size:14px; color:var(--muted)}
+.card-body{padding:14px 16px; color:var(--muted); font-size:14px}
+.card-tags{padding:12px 16px; display:flex; gap:8px; flex-wrap:wrap}
+.tagmini{font-size:12px; padding:6px 10px; border:1px solid var(--line); border-radius:999px; background:#fff}
+.card-foot{margin-top:auto; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--line)}
+.book-btn{padding:10px 12px; border:none; border-radius:10px; background:var(--accent); color:#fff; font-weight:600; cursor:pointer}
+.ghost-btn{padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#fff; color:var(--ink); font-weight:600; cursor:pointer}
+
+/* ANNOUNCEMENTS */
+.ann{padding:16px; display:grid; gap:12px}
+.note{padding:12px 14px; border:1px dashed var(--line); border-radius:12px; background:linear-gradient(120deg, #fff, #f8fffb)}
+
+/* APPOINTMENT DRAWER */
+dialog{border:none; border-radius:18px; width:min(560px, 92vw); box-shadow:var(--shadow); padding:0; overflow:hidden}
+.dialog-head{display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-bottom:1px solid var(--line); background:linear-gradient(180deg, #fff, #f7fffb)}
+.dialog-body{padding:16px 18px; display:grid; gap:12px}
+.row{display:grid; gap:8px}
+.row input, .row select, .row textarea{padding:12px; border:1px solid var(--line); border-radius:10px; background:#fff}
+.dialog-foot{padding:16px 18px; display:flex; justify-content:flex-end; gap:10px; border-top:1px solid var(--line); background:#fff}
+
+/* FOOTER */
+footer{padding:28px 24px; border-top:1px solid var(--line); color:var(--muted)}
+
+/* RESPONSIVE */
+@media (max-width: 980px){
+  .hero-grid{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+  .cards{grid-template-columns:repeat(2, 1fr)}
+  .catalog-header{align-items:stretch}
+}
+@media (max-width: 640px){
+  .cards{grid-template-columns:1fr}
+  .catalog-top{flex-direction:column; align-items:stretch}
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav container" aria-label="Main">
+      <a class="brand" href="#">
+        <span class="logo" aria-hidden>🏥</span>
+        <span class="brand-title">MedMinder</span>
+      </a>
+      <span class="tag">Browse care like books.</span>
+    </nav>
+  </header>
+
+  <section class="hero container" aria-labelledby="hero-title">
+    <div class="hero-grid">
+      <div class="hero-card">
+        <h1 id="hero-title">Find the right care from our advice and catalog</h1>
+        <p>Search specialties, providers, and services as if you were browsing a library shelf.</p>
+        <form class="searchbar" id="search-form" role="search" aria-label="Search services">
+          <input class="input" id="q" name="q" type="search" placeholder="Search e.g. Pediatrics, diabetes, flu shots" autocomplete="off" />
+          <button class="btn" type="submit">Search</button>
+        </form>
+        <div class="shelves" role="list" aria-label="Popular shelves">
+          <button class="chip" data-shelf="Primary Care">Primary Care</button>
+          <button class="chip" data-shelf="Pediatrics">Pediatrics</button>
+          <button class="chip" data-shelf="Cardiology">Cardiology</button>
+          <button class="chip" data-shelf="Dermatology">Dermatology</button>
+          <button class="chip" data-shelf="Mental Health">Mental Health</button>
+          <button class="chip" data-shelf="Immunization">Immunization</button>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Highlights">
+        <!-- Changed the heading from "This Week's Highlights" to "Name" as requested -->
+        <h2 style="margin:0 0 8px">Our Big Deal</h2>
+        <ul style="margin:0; padding-left:18px; color:var(--muted)">
+          <li>🕘 Discounted for relaxation and massage (P199 ONLY <sup><del>P399</del></sup>)</li>
+          <li>🩺 Free Cardiology consults (Every Wednesday)</li>
+          <li>🧠 Free mental health screening (Every Weekend)</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="grid">
+      <!-- Catalog (full-width now) -->
+      <section class="panel catalog" aria-label="Catalog of services">
+        <div class="catalog-header">
+          <div class="catalog-top">
+            <div class="catalog-title"><span id="result-count">0</span> results</div>
+            <div style="margin-left:auto; display:flex; gap:10px; align-items:center">
+              <select class="sort" id="sort">
+                <option value="relevance">Sort by relevance</option>
+                <option value="az">A → Z</option>
+                <option value="rating">Top rated</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- advisory notice area (hidden unless triggered by sensitive search keywords) -->
+          <div id="adviceNotice" style="display:none"></div>
+        </div>
+
+        <div class="cards" id="cards" aria-live="polite"></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="container" role="contentinfo">
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
+      <span class="logo" aria-hidden>🏥</span>
+      <div>
+        <strong>MedMinder and Advices</strong> — © <span id="year"></span> · For demonstration purposes.
+        <div style="font-size:14px">123 NV15IS, BahayNiIcee · (+63) 123 456 7891</div>
+      </div>
+      <div style="margin-left:auto; display:flex; gap:14px; font-size:14px">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Appointment Dialog -->
+  <dialog id="bookDialog" aria-labelledby="book-title">
+    <div class="dialog-head">
+      <div>
+        <div class="sub">Appointment</div>
+        <div class="title" id="book-title">Book a visit</div>
+      </div>
+      <button class="ghost-btn" onclick="bookDialog.close()">Close</button>
+    </div>
+    <form class="dialog-body" id="book-form">
+      <div class="row">
+        <label for="service">Service</label>
+        <input id="service" name="service" type="text" readonly />
+      </div>
+      <div class="row">
+        <label for="name">Full name</label>
+        <input id="name" name="name" type="text" placeholder="Juan Dela Cruz" required />
+      </div>
+      <div class="row">
+        <label for="date">Preferred date</label>
+        <input id="date" name="date" type="date" required />
+      </div>
+      <div class="row">
+        <label for="notes">Notes</label>
+        <textarea id="notes" name="notes" rows="3" placeholder="Symptoms, concerns, accessibility needs…"></textarea>
+      </div>
+    </form>
+    <div class="dialog-foot">
+      <button class="ghost-btn" onclick="bookDialog.close()">Cancel</button>
+      <button class="book-btn" form="book-form" type="submit">Confirm booking</button>
+    </div>
+  </dialog>
+
+  <script>
+    // Demo catalog data — treat specialties like library shelves
+    const CATALOG = [
+      { id:1, icon:'📘', title:'Primary Care Clinic', shelf:['Primary Care'], tags:['Telehealth','Insurance'], blurb:'Comprehensive checkups, chronic care, and referrals.', rating:4.8 },
+      { id:2, icon:'📗', title:'Pediatrics — KidsCare', shelf:['Pediatrics'], tags:['Walk-in','Insurance'], blurb:'Well-child visits, vaccines, and growth tracking.', rating:4.7 },
+      { id:3, icon:'📙', title:'Cardiology Center', shelf:['Cardiology'], tags:['Telehealth'], blurb:'Heart screening, ECG, and hypertension management.', rating:4.9 },
+      { id:4, icon:'📕', title:'Dermatology Studio', shelf:['Dermatology'], tags:['Walk-in'], blurb:'Acne, eczema, mole checks, and skin procedures.', rating:4.6 },
+      { id:5, icon:'📘', title:'Immunization Hub', shelf:['Immunization','Primary Care'], tags:['Walk-in'], blurb:'Flu shots, school vaccines, and travel immunization.', rating:4.5 },
+      { id:6, icon:'📗', title:'MindWell Mental Health', shelf:['Mental Health'], tags:['Telehealth','Insurance'], blurb:'Counseling, screening, and therapy sessions.', rating:4.8 },
+      { id:7, icon:'📙', title:'Women\'s Health Desk', shelf:['Primary Care'], tags:['Insurance'], blurb:'OB-GYN referrals, screenings, and prenatal advice.', rating:4.4 },
+      { id:8, icon:'📕', title:'Allergy & Asthma Nook', shelf:['Primary Care'], tags:['Telehealth','Walk-in'], blurb:'Testing and management for allergies and asthma.', rating:4.3 },
+      { id:9, icon:'📘', title:'Diabetes Care Corner', shelf:['Primary Care'], tags:['Telehealth'], blurb:'Education, A1C checks, and nutrition coaching.', rating:4.7 }
+    ];
+
+    const cardsEl = document.getElementById('cards');
+    const countEl = document.getElementById('result-count');
+    const form = document.getElementById('search-form');
+    const input = document.getElementById('q');
+    const sortEl = document.getElementById('sort');
+    const adviceNoticeEl = document.getElementById('adviceNotice');
+
+    const chips = Array.from(document.querySelectorAll('.chip'));
+
+    let activeShelf = null;
+    let proceedAfterAdvice = false;
+
+    // keywords that should trigger advisory notice
+    const ADVICE_KEYWORDS = ['advice','health advice','mental','counsel','therapy','symptom','symptoms','diagnose','diagnosis','treatment','suicide','self-harm','hurt myself','help me'];
+
+    function containsAdviceKeyword(q){
+      if(!q) return false;
+      return ADVICE_KEYWORDS.some(k => q.includes(k));
+    }
+
+    function render(){
+      const q = input.value.trim().toLowerCase();
+      // if query looks like it's asking for medical/mental health advice and user hasn't chosen to proceed,
+      // show the advisory notice and don't show results automatically.
+      if(containsAdviceKeyword(q) && !proceedAfterAdvice){
+        showAdviceNotice(q);
+        countEl.textContent = 0;
+        cardsEl.innerHTML = '';
+        return;
+      }
+
+      let items = CATALOG.filter(x => !q || x.title.toLowerCase().includes(q) || x.blurb.toLowerCase().includes(q) || x.shelf.join(' ').toLowerCase().includes(q));
+
+      if(activeShelf){ items = items.filter(x => x.shelf.includes(activeShelf)); }
+
+      const sort = sortEl.value;
+      if(sort === 'az') items.sort((a,b)=> a.title.localeCompare(b.title));
+      if(sort === 'rating') items.sort((a,b)=> b.rating - a.rating);
+
+      countEl.textContent = items.length;
+      cardsEl.innerHTML = items.map(card).join('');
+
+      // Re-bind book buttons
+      document.querySelectorAll('[data-book]').forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          const id = +e.currentTarget.getAttribute('data-book');
+          const svc = CATALOG.find(x=>x.id===id);
+          document.getElementById('service').value = svc?.title || '';
+          document.getElementById('bookDialog').showModal();
+        });
+      });
+    }
+
+    function card(x){
+      return `
+      <article class="card" aria-label="${x.title}">
+        <div class="card-top">
+          <div class="avatar" aria-hidden>${x.icon}</div>
+          <div class="meta">
+            <div class="title">${x.title}</div>
+            <div class="sub">Shelf: ${x.shelf.join(', ')} · ⭐ ${x.rating}</div>
+          </div>
+        </div>
+        <div class="card-body">${x.blurb}</div>
+        <div class="card-tags">
+          ${x.tags.map(t=>`<span class="tagmini">${t}</span>`).join('')}
+        </div>
+        <div class="card-foot">
+          <button class="ghost-btn" aria-label="Learn more about ${x.title}">Details</button>
+          <button class="book-btn" data-book="${x.id}">Book</button>
+        </div>
+      </article>`
+    }
+
+    // Show advisory notice for advice/mental-health style queries
+    function showAdviceNotice(query){
+      adviceNoticeEl.style.display = 'block';
+      adviceNoticeEl.innerHTML = `
+        <div class="notice" role="alert" aria-live="assertive">
+          <p><strong>Important:</strong> This site provides informational content about services. It is <em>not</em> a substitute for professional medical or mental-health advice, diagnosis, or treatment.</p>
+          <p>If you or someone else is in immediate danger or experiencing a medical emergency, call your local emergency number right away. If this is a mental health crisis or thoughts of self-harm, please contact local crisis services or a trusted professional.</p>
+          <div class="actions">
+            <button id="continueSearch" class="btn">Continue search</button>
+            <button id="contactNavigator" class="ghost-btn">Contact nurse navigator</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('continueSearch').addEventListener('click', () => {
+        proceedAfterAdvice = true;
+        adviceNoticeEl.style.display = 'none';
+        render();
+      });
+
+      document.getElementById('contactNavigator').addEventListener('click', () => {
+        // open default mail client as an example contact action (adjust as needed)
+        window.location.href = "mailto:help@medminder.example?subject=Need%20assistance%20from%20nurse%20navigator";
+      });
+    }
+
+    // Search & Filters
+    form.addEventListener('submit', (e)=>{ e.preventDefault(); proceedAfterAdvice = false; render(); });
+    input.addEventListener('input', ()=>{ proceedAfterAdvice = false; render(); });
+    sortEl.addEventListener('change', render);
+
+    chips.forEach(c=>{
+      c.addEventListener('click', ()=>{
+        const shelf = c.getAttribute('data-shelf');
+        activeShelf = (activeShelf === shelf) ? null : shelf;
+        chips.forEach(x=> x.dataset.active = (x===c && activeShelf) ? 'true' : 'false');
+        // reset any advice proceed flag when shelf changes
+        proceedAfterAdvice = false;
+        render();
+      });
+    });
+
+    // Booking form
+    const bookForm = document.getElementById('book-form');
+    bookForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(bookForm).entries());
+      alert(`Request sent!\nService: ${data.service}\nName: ${data.name}\nDate: ${data.date}`);
+      document.getElementById('bookDialog').close();
+      bookForm.reset();
+    });
+
+    // Footer year & first render
+    document.getElementById('year').textContent = new Date().getFullYear();
+    render();
+  </script>
+</body>
+</html>
